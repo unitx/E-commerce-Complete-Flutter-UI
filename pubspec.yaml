@@ -30,10 +30,15 @@ dependencies:
   # if you are using latest flutter please update your flutter_svg package to ^0.18.*
   flutter_svg: ^0.22.0 # help us to use SVG in our app
   provider: ^6.0.0 # for State management
+  http: ^0.13.4 # for http requests
+  dio: ^4.0.4 # for http requests suit
+  json_serializable: ^6.1.3 # Json serializable
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  build_runner: ^2.1.7
+  
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

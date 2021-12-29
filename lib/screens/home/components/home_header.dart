@@ -15,21 +15,27 @@ class HomeHeader extends StatelessWidget {
     return Padding(
       padding:
           EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          SearchField(),
-          IconBtnWithCounter(
-            svgSrc: "assets/icons/Cart Icon.svg",
-            press: () => Navigator.pushNamed(context, CartScreen.routeName),
-          ),
-          IconBtnWithCounter(
-            svgSrc: "assets/icons/Bell.svg",
-            numOfitem: 3,
-            press: () {},
-          ),
-        ],
-      ),
+      child: Column(children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconBtnWithCounter(
+              svgSrc: "assets/icons/menu.svg",
+              press: () {},
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            IconBtnWithCounter(
+              svgSrc: "assets/icons/Bell.svg",
+              numOfitem: 3,
+              press: () {},
+            ),
+          ],
+        ),
+        SizedBox(height: getProportionateScreenHeight(10)),
+        SearchField(),
+      ]),
     );
   }
 }

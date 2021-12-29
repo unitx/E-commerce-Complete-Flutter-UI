@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app/services/product_service.dart';
 
 class Product {
   final int id;
