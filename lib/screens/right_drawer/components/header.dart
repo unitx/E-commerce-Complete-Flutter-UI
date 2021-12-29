@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app/models/ModelHandler.dart';
 
 Widget header = Text("Filter",
     style: TextStyle(
@@ -15,9 +16,15 @@ class _RightDrawerHeaderState extends State<RightDrawerHeader> {
   @override
   Widget build(BuildContext context) {
     setState(() {
-      header = Text("Filter",
-          style: TextStyle(
-              fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black));
+      // header = TextButton.icon(
+      //   label: Text("Filters",
+      //       style: TextStyle(
+      //           fontWeight: FontWeight.bold,
+      //           fontSize: 20,
+      //           color: Colors.black)),
+      //   icon: Icon(Icons.arrow_back_sharp),
+      //   onPressed: () {},
+      // );
     });
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -27,7 +34,8 @@ class _RightDrawerHeaderState extends State<RightDrawerHeader> {
           header,
           GestureDetector(
             onTap: () {
-              Navigator.of(context).pop();
+              setState(() {});
+              // Navigator.of(context).pop();
             },
             child: Text("Done",
                 style: TextStyle(

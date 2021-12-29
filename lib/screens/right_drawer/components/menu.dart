@@ -96,7 +96,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
         setState(() {});
         header = TextButton.icon(
             icon: Icon(Icons.arrow_back_sharp),
-            label: Text("Sort"),
+            label: Text("Buying Format"),
             onPressed: () {});
         items.length = 0;
 
