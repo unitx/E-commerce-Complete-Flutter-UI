@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:shop_app/screens/right_drawer/components/Menus/sort.dart';
 import 'package:shop_app/screens/right_drawer/components/header.dart';
 import 'package:shop_app/screens/splash/splash_screen.dart';
 import 'package:shop_app/constants.dart';
@@ -10,14 +12,6 @@ class DrawerMenu extends StatefulWidget {
 }
 
 class _DrawerMenuState extends State<DrawerMenu> {
-  Widget NavBtn = TextButton(
-    child: Text(
-      "Filters",
-      style: TextStyle(
-          color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-    ),
-    onPressed: () {},
-  );
   List<Map<String, String>> items = [
     {'name': 'Sort', 'val': 'Time: newly listed'},
     {'name': 'Buying Format', 'val': 'All'},
@@ -27,41 +21,66 @@ class _DrawerMenuState extends State<DrawerMenu> {
     {'name': 'Model', 'val': 'any'},
     {'name': 'Type', 'val': 'any'},
   ];
+  // ignore: non_constant_identifier_names
+  Widget NavBtn = Text(
+    "Filters",
+    style: TextStyle(
+        color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+  );
 
+  late Widget view = Column(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: <Widget>[
+      RightDrawerHeader(NavBtn),
+      SizedBox(height: 10),
+      ...items.map((e) => menuList(e)),
+      // SortMenu("s")
+    ],
+  );
   // ignore: non_constant_identifier_names
   @override
   Widget build(BuildContext context) {
-    setState(() {});
-    return SingleChildScrollView(
-        child: Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        RightDrawerHeader(NavBtn),
-        SizedBox(height: 10),
-        ...items.map((e) => menuList(e))
-      ],
-    ));
+    return view;
   }
 
   Padding menuList(dynamic value) {
-    Color col = Colors.amber;
     return Padding(
       padding: const EdgeInsets.all(10),
       child: Column(
         children: [
           GestureDetector(
             onTap: () {
+              // items.length = 0;
               NavBtn = TextButton.icon(
                   onPressed: () {
                     back();
+                    view = Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        RightDrawerHeader(NavBtn),
+                        SizedBox(height: 10),
+                        ...items.map((e) => menuList(e)),
+                        // SortMenu("s")
+                      ],
+                    );
                     setState(() {});
                   },
-                  icon: Icon(Icons.arrow_back),
-                  label: Text("Sort"));
-              print(NavBtn);
-              items.length = 0;
-              items.addAll(drawerNavigator(value));
-              setState(() {});
+                  icon: Icon(
+                    Icons.arrow_back,
+                    color: Colors.black,
+                  ),
+                  label: Text(
+                    "Sort",
+                    style: TextStyle(color: Colors.black, fontSize: 20),
+                  ));
+
+              // items.addAll(drawerNavigator(value));
+              HapticFeedback.vibrate();
+              setState(() {
+                view = Column(
+                  children: [RightDrawerHeader(NavBtn), SortMenu("s")],
+                );
+              });
             },
             child: InkWell(
               child: Container(
@@ -102,6 +121,8 @@ class _DrawerMenuState extends State<DrawerMenu> {
           {'name': 'Price + Shipping: lowest first', 'val': ' '},
           {'name': 'Price + Shipping: higest first', 'val': ' '}
         ];
+
+        view = SortMenu("s");
         return data;
       default:
         final data = [
@@ -116,15 +137,13 @@ class _DrawerMenuState extends State<DrawerMenu> {
   }
 
   back() {
-    NavBtn = TextButton(
-      child: Text(
-        "Filters",
-        style: TextStyle(
-            color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-      ),
-      onPressed: () {},
+    NavBtn = Text(
+      "Filters",
+      style: TextStyle(
+          color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
     );
     items.length = 0;
+
     return items = [
       {'name': 'Sort', 'val': 'Time: newly listed'},
       {'name': 'Buying Format', 'val': 'All'},
@@ -135,6 +154,11 @@ class _DrawerMenuState extends State<DrawerMenu> {
       {'name': 'Type', 'val': 'any'},
     ];
   }
+
+  List<String> texts = ['first', 'second', 'third'];
+
+  List<bool> isHighlighted = [true, false, false];
+
   /*     case "Buying Format": 
         print(val['val']);
 
@@ -239,4 +263,18 @@ class _DrawerMenuState extends State<DrawerMenu> {
         break;
     }
    } */
+}
+
+class MainMenu extends StatefulWidget {
+  const MainMenu({Key? key}) : super(key: key);
+
+  @override
+  _MainMenuState createState() => _MainMenuState();
+}
+
+class _MainMenuState extends State<MainMenu> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
 }

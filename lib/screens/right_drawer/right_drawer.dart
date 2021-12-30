@@ -13,11 +13,7 @@ class _RightDrawerState extends State<RightDrawer> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Drawer(
-        child: SingleChildScrollView(
-          child: Column(children: [DrawerMenu()]),
-        ),
-      ),
+      child: Drawer(child: DrawerMenu()),
     );
   }
 }
