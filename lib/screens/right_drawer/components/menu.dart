@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/constants.dart';
-import 'package:shop_app/screens/right_drawer/components/Menus/Sort.dart';
-import 'package:flutter/services.dart';
 import 'package:shop_app/screens/right_drawer/components/header.dart';
-import 'package:shop_app/screens/right_drawer/right_drawer.dart';
+import 'package:shop_app/screens/splash/splash_screen.dart';
+import 'package:shop_app/constants.dart';
 
 class DrawerMenu extends StatefulWidget {
   const DrawerMenu({Key? key}) : super(key: key);
-
   @override
   _DrawerMenuState createState() => _DrawerMenuState();
 }
 
 class _DrawerMenuState extends State<DrawerMenu> {
-  final items = [
+  Widget NavBtn = TextButton(
+    child: Text(
+      "Filters",
+      style: TextStyle(
+          color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+    ),
+    onPressed: () {},
+  );
+  List<Map<String, String>> items = [
     {'name': 'Sort', 'val': 'Time: newly listed'},
     {'name': 'Buying Format', 'val': 'All'},
     {'name': 'Condition', 'val': 'any'},
@@ -26,38 +31,61 @@ class _DrawerMenuState extends State<DrawerMenu> {
   // ignore: non_constant_identifier_names
   @override
   Widget build(BuildContext context) {
+    setState(() {});
     return SingleChildScrollView(
         child: Column(
       crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[...items.map((e) => menuList(e))],
+      children: <Widget>[
+        RightDrawerHeader(NavBtn),
+        SizedBox(height: 10),
+        ...items.map((e) => menuList(e))
+      ],
     ));
   }
 
   Padding menuList(dynamic value) {
+    Color col = Colors.amber;
     return Padding(
-      padding: const EdgeInsets.all(15),
+      padding: const EdgeInsets.all(10),
       child: Column(
         children: [
           GestureDetector(
-            onTap: () => {drawerNavigator(value), HapticFeedback.heavyImpact()},
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  value['name'],
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
-                      color: Colors.black),
+            onTap: () {
+              NavBtn = TextButton.icon(
+                  onPressed: () {
+                    back();
+                    setState(() {});
+                  },
+                  icon: Icon(Icons.arrow_back),
+                  label: Text("Sort"));
+              print(NavBtn);
+              items.length = 0;
+              items.addAll(drawerNavigator(value));
+              setState(() {});
+            },
+            child: InkWell(
+              child: Container(
+                height: 40,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      value['name'],
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                          color: Colors.black),
+                    ),
+                    Text(
+                      value['val'],
+                      style: TextStyle(color: kPrimaryColor),
+                    ),
+                  ],
                 ),
-                Text(
-                  value['val'],
-                  style: TextStyle(color: kPrimaryColor),
-                ),
-              ],
+              ),
             ),
           ),
-          SizedBox(height: 10),
           Divider(),
         ],
       ),
@@ -67,37 +95,49 @@ class _DrawerMenuState extends State<DrawerMenu> {
   drawerNavigator(dynamic val) {
     switch (val['name']) {
       case "Sort":
-        setState(() {});
-        header = TextButton.icon(
-            icon: Icon(Icons.arrow_back_sharp),
-            label: Text("Sort"),
-            onPressed: () {});
-        items.length = 0;
-
-        items.add(
+        final data = [
           {'name': 'Best Match', 'val': ' '},
-        );
-        items.add(
           {'name': 'Time: ending soonest', 'val': ' '},
-        );
-        items.add(
           {'name': 'Time: newly listed', 'val': ' '},
-        );
-        items.add(
           {'name': 'Price + Shipping: lowest first', 'val': ' '},
-        );
-        items.add(
-          {'name': 'Price + Shipping: higest first', 'val': ' '},
-        );
+          {'name': 'Price + Shipping: higest first', 'val': ' '}
+        ];
+        return data;
+      default:
+        final data = [
+          {'name': 'Best Match', 'val': ' '},
+          {'name': 'Time: ending soonest', 'val': ' '},
+          {'name': 'Time: newly listed', 'val': ' '},
+          {'name': 'Price + Shipping: lowest first', 'val': ' '},
+          {'name': 'Price + Shipping: higest first', 'val': ' '}
+        ];
+        return data;
+    }
+  }
+
+  back() {
+    NavBtn = TextButton(
+      child: Text(
+        "Filters",
+        style: TextStyle(
+            color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+      ),
+      onPressed: () {},
+    );
+    items.length = 0;
+    return items = [
+      {'name': 'Sort', 'val': 'Time: newly listed'},
+      {'name': 'Buying Format', 'val': 'All'},
+      {'name': 'Condition', 'val': 'any'},
+      {'name': 'Category', 'val': 'Digital Cameras'},
+      {'name': 'Brand', 'val': 'Canon'},
+      {'name': 'Model', 'val': 'any'},
+      {'name': 'Type', 'val': 'any'},
+    ];
+  }
+  /*     case "Buying Format": 
         print(val['val']);
-        break;
-      case "Buying Format":
-        print(val['val']);
-        setState(() {});
-        header = TextButton.icon(
-            icon: Icon(Icons.arrow_back_sharp),
-            label: Text("Buying Format"),
-            onPressed: () {});
+
         items.length = 0;
 
         items.add(
@@ -114,11 +154,6 @@ class _DrawerMenuState extends State<DrawerMenu> {
         );
         break;
       case "Condition":
-        setState(() {});
-        header = TextButton.icon(
-            icon: Icon(Icons.arrow_back_sharp),
-            label: Text("Sort"),
-            onPressed: () {});
         items.length = 0;
 
         items.add(
@@ -145,13 +180,6 @@ class _DrawerMenuState extends State<DrawerMenu> {
         print(val['val']);
         break;
       case "Category":
-        setState(() {});
-        header = TextButton.icon(
-            icon: Icon(Icons.arrow_back_sharp),
-            label: Text("Sort"),
-            onPressed: () {});
-        items.length = 0;
-
         items.add(
           {'name': 'INDOOR AC', 'val': ' '},
         );
@@ -159,11 +187,6 @@ class _DrawerMenuState extends State<DrawerMenu> {
         print(val['val']);
         break;
       case "Brand":
-        setState(() {});
-        header = TextButton.icon(
-            icon: Icon(Icons.arrow_back_sharp),
-            label: Text("Sort"),
-            onPressed: () {});
         items.length = 0;
 
         items.add(
@@ -185,13 +208,6 @@ class _DrawerMenuState extends State<DrawerMenu> {
         print(val['val']);
         break;
       case "Model":
-        setState(() {});
-        header = TextButton.icon(
-            icon: Icon(Icons.arrow_back_sharp),
-            label: Text("Sort"),
-            onPressed: () {});
-        items.length = 0;
-
         items.add(
           {'name': 'Haier Candy', 'val': ' '},
         );
@@ -222,5 +238,5 @@ class _DrawerMenuState extends State<DrawerMenu> {
         print(val['val']);
         break;
     }
-  }
+   } */
 }

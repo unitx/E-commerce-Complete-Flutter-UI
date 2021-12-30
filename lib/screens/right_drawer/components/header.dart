@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/models/ModelHandler.dart';
-
-Widget header = Text("Filter",
-    style: TextStyle(
-        fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black));
 
 class RightDrawerHeader extends StatefulWidget {
-  const RightDrawerHeader({Key? key}) : super(key: key);
-
+  RightDrawerHeader(this.header);
+  Widget header;
   @override
   State<RightDrawerHeader> createState() => _RightDrawerHeaderState();
 }
@@ -15,27 +10,16 @@ class RightDrawerHeader extends StatefulWidget {
 class _RightDrawerHeaderState extends State<RightDrawerHeader> {
   @override
   Widget build(BuildContext context) {
-    setState(() {
-      // header = TextButton.icon(
-      //   label: Text("Filters",
-      //       style: TextStyle(
-      //           fontWeight: FontWeight.bold,
-      //           fontSize: 20,
-      //           color: Colors.black)),
-      //   icon: Icon(Icons.arrow_back_sharp),
-      //   onPressed: () {},
-      // );
-    });
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(15),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          header,
+          widget.header,
           GestureDetector(
             onTap: () {
               setState(() {});
-              // Navigator.of(context).pop();
+              Navigator.of(context).pop();
             },
             child: Text("Done",
                 style: TextStyle(
